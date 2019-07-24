@@ -130,6 +130,89 @@ Humanoid.prototype.greet = function() {
     language: 'Elvish',
   });
 
+
+  // Stretch task: 
+  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
+
+  function Hero(attributes){
+    Humanoid.call(this, attributes);
+    this.howBrave = attributes.howBrave,
+    this.howLoyal = attributes.howLoyal
+  }
+
+  Hero.prototype = Object.create(Humanoid.prototype);
+
+  function Villain(attributes) {
+    Humanoid.call(this, attributes);
+    this.howScheming = attributes.howScheming;
+    this.howEvil = attributes.howEvil;
+  }
+
+  Villain.prototype = Object.create(Humanoid.prototype);
+  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
+  Hero.prototype.joust = function(opponent) {
+    let injury = Math.floor(Math.random()*5);
+    let health = opponent.healthPoints;
+    let damage = health - injury;
+    return `${opponent.name} is down to ${damage} health points.`
+  }
+
+  Villain.prototype.sneakyAttack = function(opponent) {
+    let injury = Math.floor(Math.random()*5);
+    let health = opponent.healthPoints;
+    let damage = health - injury;
+    return `${opponent.name} is down to ${damage} health points.`
+  }
+
+
+
+  let dashingHero = new Hero ({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 10,
+    name: 'Mako',
+    team: 'open ocean',
+    weapons: [
+      'teeth',
+      'skin',
+    ],
+    language: 'whale',
+    howBrave: 'so brave!',
+    howLoyal: 'so loyal!'
+  });
+
+  let evilVillain = new Villain ({
+    createdAt: new Date(),
+    dimensions: {
+      length: 1,
+      width: 1,
+      height: 1,
+    },
+    healthPoints: 10,
+    name: 'Senor Penguin',
+    team: 'Antarctic coast',
+    weapons: [
+      'beak',
+      'pet velociraptor',
+    ],
+    language: 'whale',
+    howScheming: 'so scheming!',
+    howEvil: 'unmatchably dispicable'
+  });
+
+  let ourHeroFights = dashingHero.joust(evilVillain);
+  let ourVillainFights = evilVillain.sneakyAttack(dashingHero);
+
+  console.log(ourHeroFights);
+  console.log(ourVillainFights);
+  // * Create two new objects, one a villain and one a hero and fight it out with methods!
+  
+
+
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
   console.log(swordsman.healthPoints); // 15
@@ -141,8 +224,3 @@ Humanoid.prototype.greet = function() {
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 
-
-  // Stretch task: 
-  // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
-  // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
-  // * Create two new objects, one a villain and one a hero and fight it out with methods!
